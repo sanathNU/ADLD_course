@@ -9,9 +9,9 @@ output reg Qbar,
 input Reset,
 input Set);
 
-always @ (posedge Clock)
+always @ (posedge Clock,negedge reset)
     begin
-    //synchronous active low reset
+    //asynchronous active low reset
         if(~Reset)
             begin
                 Q <= 0;
