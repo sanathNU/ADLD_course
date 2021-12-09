@@ -1,5 +1,5 @@
 //Problem:
-//        Design a TFF with active low synchronous reset and active high synchronous set.
+//        Design a JK flip flop with active low synchronous reset and active high synchronous set.
 
 module JKFF(
 //declaring all inputs and outputs correctly
