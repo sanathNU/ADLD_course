@@ -1,5 +1,5 @@
 //Problem:
-//        Design a JK flip flop with active low synchronous reset and active high synchronous set.
+//        Design a JK flip flop with active low asynchronous reset and active high synchronous set.
 
 module JKFF(
 //declaring all inputs and outputs correctly
@@ -11,9 +11,9 @@ output reg Qbar,
 input reset,
 input set);
 
-always @ (posedge Clock)
+always @ (posedge Clock,negedge reset)
     begin
-    //synchronous active low reset
+    //asynchronous active low reset
         if(~reset)
         begin
             Q <= 0;
