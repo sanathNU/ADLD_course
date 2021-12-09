@@ -1,6 +1,19 @@
 // Problem:
 //         Code all basic gates using 2x1 Muxes. The gates to be coded are: AND, OR, NOT,NAND, XOR, XNOR,
 
+module Mux2Gates(A,B,O);
+input A,B;
+output [5:0] O;
+
+AND  a(A,B,O[0]);
+OR   b(A,B,O[1]);
+NOT  c(A,O[2]);
+NAND d(A,B,O[3]);
+XOR  e(A,B,O[4]);
+XNOR f(A,B,O[5]);
+
+endmodule
+
 module AND(A,B,o1);
 input A,B;
 output o1;
