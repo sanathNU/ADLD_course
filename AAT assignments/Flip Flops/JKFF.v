@@ -1,37 +1,32 @@
 //Problem:
 //        Design a JK flip flop with active low asynchronous reset and active high synchronous set.
 
-module JKFF(
-//declaring all inputs and outputs correctly
-input Clock,
-input J,
-input K,
-output reg Q,
-output reg Qbar,
-input reset,
-input set);
+module JKFF(Clock,J,K,reset,set,Q,Qbar);
+input Clock,J,K,reset,set;
+output reg Q,Qbar;
 
 always @ (posedge Clock,negedge reset)
     begin
-    //asynchronous active low reset
-        if(~reset)
-        begin
-            Q <= 0;
-            Qbar <= 1;
-        end
+        //asynchronous active low reset
+    if(reset==0)
+    begin
+        Q <= 0;
+        Qbar <= 1;
+    end
     //synchronous active high set
-        if(set)
+    else if(set)
         begin
             Q <= 1;
             Qbar <= 0;
         end
     //normal jkff part
-        else
-            case({J,K})
-            2'b00 : begin Q <= Q; Qbar <= Qbar; end
-            2'b01 : begin Q <= 0; Qbar <= 1; end
-            2'b10 : begin Q <= 1; Qbar <= 0; end
-            2'b11 : begin Q <= Qbar; Qbar <= Q; end
-            endcase
+    else
+        case({J,K})
+        2'b00 : begin Q <= Q; Qbar <= Qbar; end
+        2'b01 : begin Q <= 0; Qbar <= 1; end
+        2'b10 : begin Q <= 1; Qbar <= 0; end
+        2'b11 : begin Q <= Qbar; Qbar <= Q; end
+        default:begin Q <= Q; Qbar <= Qbar;end
+        endcase
     end
 endmodule
