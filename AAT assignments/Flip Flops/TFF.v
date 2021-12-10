@@ -4,19 +4,19 @@
 module TFF(
 input Clock,
 input T,
-output reg Q,
-output reg Qbar,
 input Reset,
-input Set);
-
-always @ (posedge Clock,negedge reset)
+input Set,
+output reg Q,
+output reg Qbar);
+    
+always @ (posedge Clock,negedge Reset)
     begin
     //asynchronous active low reset
-        if(~Reset)
-            begin
-                Q <= 0;
-                Qbar <=0;
-            end
+    if(~Reset)
+        begin
+            Q <= 0;
+            Qbar <=1;
+        end
     //synchronous active high reset
         if(Set)
             begin Q <=1;
