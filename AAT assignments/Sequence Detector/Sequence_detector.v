@@ -1,42 +1,40 @@
-odule Sequence_Generator( 
+// Main module code for sequence generation
+module Sequence_Generator( 
 input Clock,
 input Reset,
 output reg [2:0]  Out);
 
-wire [2:0] intWire;
-wire QA,QB,QC, QA_bar,QB_bar,QC_bar;
-//initializing all logic required for flipflops
-assign  intWire[0] = QA*QB_bar + QB*QC_bar;
-assign  intWire[1] = QA_bar*QC  + QB_bar*QC;
-assign  intWire[2] = QA_bar*QC_bar + QC*QA;
- 
-//initializing all fliplflops
-DFF DA(Clock, QB^QC, Reset, QA,QA_bar);
-DFF DB(Clock, QB_bar + QA_bar*QC, Reset, QB,QB_bar);
-DFF DC(Clock, QC_bar*QA_bar*QB, Reset, QC,QC_bar);
+//Declaring the present and next state registers
+reg [2:0] PS, NS;
 
-assign Out = {QC, QB, QA};
- 
-endmodule
+// assigning names to the parameters
+parameter S0 = 3'b000, S1 = 3'b011, S2 = 3'b010, S3 = 3'b101, S4 = 3'b111; 
 
-
-//Code for DFF
-module DFF(
-input clock,
-input D,
-input Reset,
-output reg Q,
-output reg Qbar);
-
-always @ (posedge clock, posedge Reset)
-begin
-   if(Reset)
-       Q <= 0;
-   else
-       begin
-       Q <= D;
-       Qbar <= ~D;
-       end
-end
+//defining the next state block
+always @(PS)
+    begin
+        case(PS)
+        S0: NS = S1;
+        S1: NS = S2;
+        S2: NS = S3;
+        S3: NS = S4;
+        S4: NS = S0;
+        default: NS = S0;
+        endcase
+    end
+    
+//defining the output block
+always @(posedge Clock, posedge Reset)
+    begin
+        if(Reset)
+        begin
+        PS <= S0;
+        Out <= PS;
+        end
+        else
+        begin
+        PS <= NS;
+     Out <= PS;end
+    end
 
 endmodule
