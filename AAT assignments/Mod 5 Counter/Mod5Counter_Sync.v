@@ -1,3 +1,4 @@
+//Synchronous mod 5 counter
 module Mod5Counter(input Clock,Reset,output [2:0] Y);
 //declaring the wires
 wire Qa,Qb,Qc;
